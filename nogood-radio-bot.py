@@ -27,7 +27,7 @@ def send_nostr_event(relay_list, message, privk):
 
 if __name__=='__main__':
     schedule.every().day.at('15:00').do(send_nostr_event, relay_list=relay_list, message=msg_to_nostr, privk=nsec_key)
+    #send_nostr_event(relay_list, 'your-message', nsec_key)
     while True:
         schedule.run_pending()
         time.sleep(1)
-
