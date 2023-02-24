@@ -19,11 +19,14 @@ def send_nostr_event(relay_list, message, privk):
   print(event.to_message(), len(event.to_message()))
   relay_manager.publish_event(event)
   time.sleep(1) # allow the messages to send
-  while relay_manager.message_pool.has_notices():
-    notice_msg = relay_manager.message_pool.get_notice()
-    print(notice_msg.content)
-  relay_manager.close_connections()
-  print('sended!')
+  try:
+    while relay_manager.message_pool.has_notices():
+      notice_msg = relay_manager.message_pool.get_notice()
+      print(notice_msg.content)
+    relay_manager.close_connections()
+    print('sended!')
+  except:
+    pass
 
 if __name__=='__main__':
     schedule.every().day.at('15:00').do(send_nostr_event, relay_list=relay_list, message=msg_to_nostr, privk=nsec_key)
